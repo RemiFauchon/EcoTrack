@@ -21,11 +21,20 @@
   h3 {
     @apply font-display tracking-tight;
   }
-  .leaflet-container {
-    height: 100%;
-    width: 100%;
-    background: #e7e6df;
-  }
+}
+
+/* Leaflet — règles HORS @layer (priorité max) + hauteur garantie.
+   Sinon la carte peut rester invisible (conteneur à hauteur nulle). */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  min-height: 320px;
+  background: #e7e6df;
+}
+/* La préflight Tailwind impose max-width:100% aux <img> : on l'annule pour les tuiles. */
+.leaflet-tile,
+.leaflet-container img {
+  max-width: none !important;
 }
 
 @layer components {
