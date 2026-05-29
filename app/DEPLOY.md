@@ -23,16 +23,17 @@ cd EcoTrack/app
 
 ## 3. Configurer les secrets
 ```bash
-cp .env.prod.example .env.prod
-nano .env.prod
+cp .env.prod.example .env
+nano .env
 ```
+> Le fichier doit s'appeler **`.env`** : Docker Compose le charge automatiquement (pas besoin du flag `--env-file`, non supporté par les versions anciennes).
 - `DOMAIN` : votre domaine (HTTPS auto) **ou** `:80` (HTTP via IP, sans certificat).
 - `POSTGRES_PASSWORD` : un mot de passe fort.
 - `JWT_ACCESS_SECRET` / `JWT_REFRESH_SECRET` : générez-les avec `openssl rand -hex 32`.
 
 ## 4. Démarrer
 ```bash
-docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --build
+docker compose -f docker-compose.prod.yml up -d --build
 ```
 - Premier démarrage : build des images + injection automatique des données de démo
   (12 secteurs, 144 conteneurs, comptes de démonstration).
@@ -48,7 +49,7 @@ docker compose -f docker-compose.prod.yml logs -f backend
 # État
 docker compose -f docker-compose.prod.yml ps
 # Mise à jour après un git pull
-git pull && docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --build
+git pull && docker compose -f docker-compose.prod.yml up -d --build
 # Arrêt
 docker compose -f docker-compose.prod.yml down
 ```
