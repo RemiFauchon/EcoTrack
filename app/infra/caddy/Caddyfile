@@ -1,0 +1,17 @@
+# Reverse proxy ECOTRACK.
+# DOMAIN = un nom de domaine (ex. ecotrack.mondomaine.fr) -> HTTPS automatique (Let's Encrypt).
+# DOMAIN = :80                                            -> HTTP simple (accès par IP, sans certificat).
+{$DOMAIN} {
+	encode gzip
+
+	# API REST + WebSocket temps réel -> backend NestJS
+	@back path /api/* /socket.io/*
+	handle @back {
+		reverse_proxy backend:3000
+	}
+
+	# Tout le reste -> SPA React (servie par Nginx)
+	handle {
+		reverse_proxy frontend:80
+	}
+}

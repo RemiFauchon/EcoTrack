@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Env (ne jamais committer les secrets)
+.env
+*.env
+.env.*
+!.env.example
+!.env.prod.example
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+
+# Coverage / tests
+coverage/
+.nyc_output/
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Docker volumes (local data)
+.data/
+pgdata/
+
+# Frontend
+frontend/dist/
+.vite/

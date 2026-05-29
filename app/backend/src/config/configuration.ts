@@ -7,6 +7,11 @@ export default () => ({
     user: process.env.POSTGRES_USER ?? 'ecotrack',
     password: process.env.POSTGRES_PASSWORD ?? 'ecotrack',
     name: process.env.POSTGRES_DB ?? 'ecotrack',
+    // Synchronisation du schéma : auto en dev ; en prod, pilotée par DB_SYNCHRONIZE
+    // (true pour la démo VPS ; false si l'on utilise des migrations).
+    synchronize:
+      (process.env.DB_SYNCHRONIZE ??
+        (process.env.NODE_ENV === 'production' ? 'false' : 'true')) === 'true',
   },
   redis: {
     host: process.env.REDIS_HOST ?? 'localhost',
