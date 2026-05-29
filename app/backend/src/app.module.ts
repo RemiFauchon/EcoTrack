@@ -36,9 +36,9 @@ import { SeedModule } from './modules/seed/seed.module';
         password: config.get<string>('database.password'),
         database: config.get<string>('database.name'),
         autoLoadEntities: true,
-        // MVP : synchronisation automatique du schéma en développement.
-        // En production, on basculerait sur des migrations TypeORM.
-        synchronize: config.get<string>('env') !== 'production',
+        // Synchronisation pilotée par configuration (DB_SYNCHRONIZE) :
+        // auto en dev ; activable en prod pour la démo VPS, sinon migrations.
+        synchronize: config.get<boolean>('database.synchronize'),
       }),
     }),
 
