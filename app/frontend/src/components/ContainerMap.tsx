@@ -40,10 +40,15 @@ export default function ContainerMap({ containers, routeStops, onMapClick }: Pro
     routeStops?.slice().sort((a, b) => a.order - b.order).map((s) => [s.lat, s.lng]) ?? [];
 
   return (
-    <MapContainer center={LYON} zoom={13} scrollWheelZoom>
+    <MapContainer
+      center={LYON}
+      zoom={13}
+      scrollWheelZoom
+      style={{ height: '100%', width: '100%', minHeight: '320px' }}
+    >
       <TileLayer
         attribution='&copy; OpenStreetMap'
-        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <MapResizer />
       {onMapClick && <ClickHandler onClick={onMapClick} />}
