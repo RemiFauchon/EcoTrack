@@ -1,28 +1,24 @@
 # ECOTRACK — Soutenance Blocs 1 & 2
 
-Plateforme IoT de gestion intelligente des déchets urbains
+Plateforme intelligente de gestion des déchets urbains
 
 **Mastère EADL — Expert en Architecture et Développement Logiciel (RNCP 38822)**
-Filière Développement · M1 · Année 2025-2026
+Filière Développement · M2 · 2025-2026
+🔗 Démo en ligne : https://ecotrack.lorisdev.fr
 
-> Notes orateur : se présenter en 20 s, annoncer le plan (Bloc 1 = cadrage & planification, Bloc 2 = conception & développement), durée 40 min.
+> Notes : se présenter (20 s), annoncer le plan — Bloc 1 = cadrage & planification, Bloc 2 = conception & développement. Préciser qu'une démo live clôturera la présentation. Durée 40 min.
 
 ---
 
-## Plan de la soutenance
+## Plan
 
 - **Bloc 1 — Planifier et organiser le projet**
-  - Contexte & problématique
-  - Audit initial (SWOT, risques)
-  - Veille technologique
-  - Architecture cible & modélisation
-  - Planification Agile & pilotage
+  - Contexte & problématique · Audit & risques · Veille → choix techniques
+  - Architecture cible · Modélisation · Planification Agile
 - **Bloc 2 — Concevoir et développer la solution**
-  - Stack & architecture logicielle
-  - Front-end, back-end & API
-  - Sécurité, tests & qualité
-  - Documentation & livrables
-- Compétences transversales : anglais technique · numérique responsable
+  - Stack & architecture logicielle · Modèle de données · API & sécurité
+  - Optimisation des tournées · Temps réel IoT · Tests · Déploiement
+- **Démo live** · Compétences transversales · Bilan & perspectives
 
 ---
 
@@ -34,150 +30,101 @@ Planifier et organiser un projet de développement logiciel
 
 ## Le contexte : ECOTRACK
 
-Une métropole de **500 000 habitants** veut moderniser sa gestion des déchets.
+Une métropole de **500 000 habitants**, **2 000 conteneurs** à déchets sur **12 secteurs**.
 
-- **2 000 conteneurs** à équiper de capteurs connectés
-- **180 millions de mesures/an** à collecter et exploiter
-- Aujourd'hui : tournées **fixes**, sans visibilité temps réel
+- Collecte **calendaire** : tournées à fréquence fixe, sans connaître le remplissage réel
+- **30 à 40 %** des arrêts portent sur des conteneurs quasi vides
+- Débordements, coûts élevés (carburant, main d'œuvre), CO₂ évitable
 
-> Notes : poser le décor en 1 min. Insister sur l'échelle (volume) = vrai enjeu d'ingénierie.
-
----
-
-## La problématique métier
-
-> « Comment passer d'une collecte planifiée à l'aveugle à une collecte **pilotée par la donnée temps réel** ? »
-
-Douleurs actuelles :
-- **Collecte inefficace** — tournées non optimisées
-- **Débordements** — pas de visibilité sur le niveau de remplissage
-- **Coûts élevés** — carburant, main d'œuvre, maintenance
-- **Impact environnemental** — émissions CO₂ évitables
+> Notes : poser le problème métier en 1 min. Insister sur « collecte à l'aveugle ».
 
 ---
 
-## Objectifs & indicateurs de succès
+## La problématique
+
+> Comment passer d'une collecte **planifiée à l'aveugle** à une collecte **pilotée par la donnée temps réel** — tout en impliquant les citoyens ?
+
+**4 profils utilisateurs** : Citoyen (15 000), Agent (50), Gestionnaire (10), Administrateur (3).
+
+> Notes : c'est le fil rouge de toute la solution.
+
+---
+
+## Objectifs & indicateurs
 
 | Objectif | Cible |
 |---|---|
-| Réduction des coûts de collecte | **−20 à −30 %** |
-| Débordements de conteneurs | **< 5 %** des incidents |
-| Calcul d'une tournée optimisée (50 conteneurs) | **< 30 s** |
-| Analytics temps réel pour les gestionnaires | Latence **< 2 s** |
-
-> Notes : ce sont les KPIs métier ; on y reviendra côté technique au Bloc 2.
-
----
-
-## Audit initial — Analyse SWOT
-
-| Forces | Faiblesses |
-|---|---|
-| Équipe Agile, stack moderne | Délai serré (16 semaines) |
-| Sponsor engagé, budget cohérent | Peu d'expérience IoT initiale |
-| Technologies matures | Algorithme TSP complexe |
-
-| Opportunités | Menaces |
-|---|---|
-| Extension à d'autres villes | Cyberattaques (déni, ransomware) |
-| IA prédictive de remplissage | Pannes / vandalisme capteurs |
-| Image RSE, Open Data | Adoption faible des chauffeurs |
+| Réduction des distances de tournée | **−20 %** |
+| Taux de débordement | **< 2 %** |
+| Coûts opérationnels | **−15 %** |
+| Émissions CO₂ | **−18 %** |
+| Disponibilité plateforme | **> 99,5 %** |
+| Citoyens actifs engagés | **15 000** |
 
 ---
 
-## Cartographie des risques majeurs
+## Audit initial & risques
 
-- **R1 — Retard sur une fonctionnalité critique** · Criticité ÉLEVÉE
-  → MVP simplifié (algo glouton avant génétique), priorisation MoSCoW, buffer 10 %
-- **R2 — Latence d'ingestion IoT > seuil** · MOYENNE
-  → file MQTT + montée en charge testée dès le sprint 2
-- **R3 — Départ d'un membre clé** · MOYENNE
-  → documentation continue (ADR, README), pair programming
-- **R4 — Dépassement budget cloud** · MOYENNE
-  → containerisation, dimensionnement progressif, alertes coûts
+**SWOT (synthèse)** : stack moderne & équipe Agile (forces) · délai 16 semaines & complexité TSP (faiblesses) · extension multi-villes & IA prédictive (opportunités) · adoption citoyenne & cyberattaques (menaces).
 
-> Notes : montrer la méthode (proba × impact = criticité), pas réciter la liste.
+**Risques majeurs maîtrisés** :
+- Retard fonctionnalité critique → MVP + priorisation MoSCoW
+- Montée en charge IoT → tests de charge dès le sprint 3
+- RGPD données géolocalisées → privacy by design
+
+> Notes : montrer la méthode (proba × impact), pas réciter.
 
 ---
 
-## Veille technologique — méthode
+## Veille → choix techniques justifiés
 
-- **Sources** : GitHub Trending, doc officielle, ANSSI/CNIL/OWASP, conférences
-- **Outils** : Feedly (RSS), Google Alerts, veille hebdo structurée (Notion)
-- **Sources anglophones** intégrées → *compétence transversale anglais technique*
-- **Critères de sélection** : maturité, communauté, adéquation au besoin ECOTRACK
+Comparatifs pondérés (note /10) menés sur sources anglophones (*compétence transversale*).
 
-> Notes : insister sur la rigueur de la démarche, pas juste « j'ai lu des articles ».
+| Brique | Retenu | Pourquoi |
+|---|---|---|
+| Frontend | **React 18 + TS** | Écosystème, typage, cartographie |
+| Backend | **NestJS** | Modularité, « microservices-ready » |
+| Données | **PostgreSQL + PostGIS** | Relationnel + géospatial |
+| IoT | **MQTT (Mosquitto)** | Standard léger de l'IoT |
 
----
-
-## Veille — choix technologiques argumentés
-
-Comparatif pondéré (note /10 sur 5 critères) :
-
-| Brique | Candidats évalués | Retenu | Pourquoi |
-|---|---|---|---|
-| Frontend | React · Vue · Angular | **React 18** | Écosystème, communauté, TS |
-| Backend | Node/Express · FastAPI · Spring | **FastAPI / Node** | Perf async, productivité |
-| Base de données | PostgreSQL · MongoDB · TimescaleDB | **PostgreSQL + PostGIS** | Géospatial + relationnel |
-
-> Notes : le jury veut une *justification*, pas une mode. Relier chaque choix au besoin (géospatial → PostGIS).
+> Notes : le jury veut une justification, pas une mode.
 
 ---
 
-## Architecture cible (vision haut niveau)
+## Architecture cible
 
 ```
-[Capteurs IoT] --MQTT--> [Service IoT] --> [PostgreSQL/PostGIS + TimescaleDB]
-                                              ^
-[Front React] <--REST/WebSocket--> [API] --> [Redis cache]
-                                   [Service Optimisation TSP]
-                                   [Auth JWT/2FA] [Notifications]
+Citoyen/Agent/Gestionnaire (React SPA)
+        │ REST + WebSocket
+   API NestJS (modules DDD + Auth/RBAC)
+   │            │              │
+PostgreSQL   Redis        MQTT (capteurs)
+ +PostGIS    cache        ingestion temps réel
 ```
 
-- Architecture **microservices** (5 services) · **Docker** · Nginx reverse proxy
-- Principes : modularité · scalabilité horizontale · résilience · sécurité
+Microservices logiques (DDD), API Gateway, temps réel WebSocket, conteneurisé **Docker**.
 
-> Notes : remplacer ce bloc texte par ton vrai schéma (Draw.io / Excalidraw) dans Gamma.
-
----
-
-## Modélisation — choix UML
-
-Méthode retenue : **UML** (architecture orientée objet).
-
-- **Diagramme de cas d'utilisation** — acteurs : Gestionnaire, Chauffeur, Admin, Système IoT
-- **Diagramme de classes** — Conteneur, Mesure, Tournée, Alerte, Utilisateur
-- **Diagrammes de séquence** — ex. « Remontée d'alerte IoT » et « Authentification 2FA »
-
-> Notes : insérer les 3 diagrammes en images. Justifier UML (objet) vs BPMN (process) vs MERISE (données).
+> Notes : renvoyer au schéma C4 du DCT (Annexe A).
 
 ---
 
-## Planification Agile — Scrum
+## Modélisation (UML)
 
-- **Cadre Scrum** : sprints de **2 semaines**, **8 sprints** = 16 semaines
-- **Backlog** : 15-20 user stories, priorisation **MoSCoW**, estimation en **story points**
-- Exemple : *« En tant que gestionnaire, je veux voir la carte temps réel afin de visualiser les niveaux »* — MUST · 8 SP
+- **Cas d'utilisation** : 4 acteurs, 14 use cases (signalement citoyen, tournée agent, optimisation gestionnaire, admin, IoT)
+- **Diagramme de classes** : Utilisateur, Conteneur, Zone, Mesure, Tournée, Signalement, Alerte, Gamification
+- **Séquences** : remontée IoT → alerte ; authentification JWT + MFA
 
-| Sprint | Objectif |
-|---|---|
-| S1-2 | Socle technique, CI/CD |
-| S3-4 | Module IoT & ingestion |
-| S5-6 | Interface gestionnaire |
-| S7-8 | Optimisation tournées (TSP) |
+> Notes : insérer 2 diagrammes UML clés (use cases + une séquence).
 
 ---
 
-## Pilotage — KPIs de suivi
+## Planification Agile
 
-- **Vélocité** : 25 ± 3 SP / sprint
-- **Couverture de tests** : ≥ 80 %
-- **Temps de réponse API** : < 200 ms
-- **Disponibilité** : ≥ 99,5 %
-- **Bugs critiques (P1) ouverts** : 0
+- **Scrum**, sprints de 2 semaines, sur **4 mois**
+- Jalons : cadrage (S1-3) → socle (S4-7) → fonctionnalités (S8-11) → tests (S12-14) → soutenance (S15-16)
+- Backlog priorisé **MoSCoW**, **KPIs** : couverture tests, latence API, vélocité, uptime
 
-> Notes : transition vers le Bloc 2 → « voici comment on a construit la solution ».
+> Notes : transition vers le Bloc 2 → « voici ce qu'on a construit ».
 
 ---
 
@@ -187,121 +134,138 @@ Concevoir et développer des solutions logicielles
 
 ---
 
-## Stack technologique retenue
+## Stack technologique
 
-| Couche | Technologie | Justification |
-|---|---|---|
-| **Frontend** | React 18 + TypeScript | Typage, écosystème, Design System |
-| **Backend** | FastAPI / Node.js (microservices) | Perf async, ingestion IoT |
-| **Données** | PostgreSQL 15 + PostGIS, TimescaleDB | Géospatial + séries temporelles |
-| **Cache / temps réel** | Redis + WebSocket (Socket.io) | Sessions, push live |
-| **Infra** | Docker + Docker Compose, Nginx | Reproductibilité, scalabilité |
+| Couche | Technologies |
+|---|---|
+| Frontend | React 18 · TypeScript · Vite · Tailwind · React-Leaflet |
+| Backend | NestJS · TypeScript · TypeORM · Socket.io |
+| Données | PostgreSQL 15 + PostGIS · Redis |
+| IoT | MQTT (Mosquitto) + simulateur de capteurs |
+| Sécurité | JWT + refresh · RBAC · MFA (TOTP) · bcrypt |
+| Qualité | Jest · ESLint · Docker |
+
+> Notes : un seul langage (TypeScript) front + back = cohérence.
 
 ---
 
-## Architecture logicielle 3-tiers
+## Architecture logicielle
 
-- **Tier 1 — Présentation** : SPA React (carte Leaflet, dashboards Recharts)
-- **Tier 2 — Métier** : 5 microservices (IoT · API · Optimisation · Auth · Notifications)
-- **Tier 3 — Données** : PostgreSQL/PostGIS · TimescaleDB · Redis
+- **Modules NestJS** par domaine (DDD) : Auth, Containers, Measurements, Alerts, Routes, Signalements, Gamification, Reports…
+- **Patterns** : Repository (accès données), Strategy (algos TSP), Observer/event-driven (temps réel)
+- Façade : guards JWT / RBAC / rate limiting, validation des DTO
 
-**Patterns appliqués** : Repository · Strategy (algos d'optimisation interchangeables) · Observer (WebSocket) · Factory
-
-> Notes : relier chaque pattern à un besoin réel (Strategy → glouton OU génétique).
+> Notes : montrer le découpage en modules (lisibilité, testabilité).
 
 ---
 
 ## Modèle de données
 
-- Tables clés : `users`, `containers`, `measurements`, `routes`, `alerts`
-- **Index géospatiaux GiST** (PostGIS) → requêtes spatiales rapides
-- **Partitionnement** des mesures par mois + compression TimescaleDB
-- Schéma entité-relation (ERD) → *à joindre en annexe*
+- Entités : **Utilisateur, Conteneur, Zone, Mesure, Tournée, Signalement, Alerte, Badge, Défi**
+- **PostGIS** : position des conteneurs en `geometry(Point, 4326)`, index spatial **GiST**
+- Requêtes de proximité (`ST_DWithin`) pour l'optimisation et la carte
 
-> Notes : montrer un extrait d'ERD, pas tout le schéma.
-
----
-
-## Développement Front-end
-
-- **Design System** : palette, typographie, composants réutilisables (MUI + Tailwind)
-- **Accessibilité WCAG 2.1 AA** : contrastes, navigation clavier, attributs ARIA
-- **Performance** : score Lighthouse, Core Web Vitals, lazy loading, code splitting
-- **Temps réel** : carte des conteneurs mise à jour en live (WebSocket)
-
-> Notes : l'accessibilité est exigée par le référentiel — ne pas l'oublier.
+> Notes : renvoyer à l'ERD (Annexe B du DCT).
 
 ---
 
-## Back-end & conception de l'API
+## Front-end
 
-- API **REST** documentée via **OpenAPI / Swagger**
-- Conventions de nommage, versionnage, gestion des codes HTTP & erreurs
-- Validation des entrées (Pydantic / schémas JSON)
-- **Rate limiting** : 1000 req/min par utilisateur
+- **Dashboard gestionnaire** : carte temps réel (conteneurs colorés par état), KPIs, alertes
+- **Espace citoyen** : signalement géolocalisé + **gamification** (points, badges, défis, classement)
+- **Vue agent** : tournée + **scan QR** de validation
+- **Accessibilité** WCAG 2.1 AA (statut par icône + texte + couleur)
 
-> Notes : montrer 1-2 endpoints significatifs (ex. `GET /containers`, `POST /routes/optimize`).
-
----
-
-## Sécurité — OWASP Top 10
-
-- **Authentification** : JWT (access 15 min + refresh 7 j) + **2FA TOTP**
-- **Autorisation** : RBAC (Admin · Gestionnaire · Chauffeur)
-- Protection injections, CORS, headers de sécurité, gestion des secrets
-- **Haute disponibilité** intégrée dès la conception
-
-> Notes : citer 3-4 risques OWASP concrets et la parade côté ECOTRACK.
+> Notes : c'est la partie la plus visuelle — réserver pour la démo.
 
 ---
 
-## Tests & assurance qualité
+## Back-end & API
 
-- **Pyramide de tests** : unitaires → intégration → end-to-end
-- Objectif de **couverture ≥ 80 %**
-- **Tests de sécurité** : SAST (analyse statique), DAST (dynamique), audit des dépendances
-- Rapports de couverture → *en annexe*
+- API **REST** : **40 opérations**, documentées **OpenAPI/Swagger** (`/api/docs`)
+- **Sécurité OWASP** : JWT (access 15 min + refresh), **RBAC 4 rôles**, **MFA TOTP**, verrouillage après 5 échecs, bcrypt, rate limiting
+- Validation stricte des entrées, requêtes paramétrées (anti-injection)
 
-> Notes : montrer un rapport de couverture ou un run CI vert.
+> Notes : ouvrir Swagger en démo, montrer le « Authorize ».
 
 ---
 
-## Documentation & livrables
+## Optimisation des tournées (TSP)
 
-- `README` complet · guide d'installation · guide contributeur
-- **Documentation API** (Swagger) · guide utilisateur
-- **ADR** (Architecture Decision Records) — traçabilité des choix
-- Code versionné (GitHub + GitFlow), CI/CD GitHub Actions
+- Algorithme du **voyageur de commerce** : plus proche voisin + raffinement **2-opt**
+- Distances géodésiques (Haversine), seuil de collecte **paramétrable**
+- Calcul d'une tournée d'une cinquantaine de conteneurs en **quelques secondes**
+
+> Notes : montrer le bouton « Générer une tournée » → itinéraire tracé sur la carte.
+
+---
+
+## Temps réel & chaîne IoT
+
+```
+Capteur → MQTT → Ingestion → calcul d'état → alerte → WebSocket → Dashboard
+```
+
+- Simulateur de **2 000 capteurs** (mesure toutes les 15 min)
+- Mise à jour de la carte **sans rechargement** (pattern Observer)
+
+> Notes : en démo, la carte bouge toute seule au fil des mesures.
+
+---
+
+## Tests & qualité
+
+- **50 tests** automatisés (Jest), **~80 % de couverture** des services métier
+- Module d'optimisation TSP couvert à **100 %**
+- Scénarios de sécurité testés (verrouillage, MFA)
+- **Docker Compose** : toute la stack démarrable en une commande
+
+> Notes : la couverture > 60 % exigée par le CDC est dépassée.
+
+---
+
+## Déploiement
+
+- Conteneurisé (Docker) : API, front, PostgreSQL+PostGIS, Redis, MQTT
+- Reverse proxy + **HTTPS** (Let's Encrypt)
+- **En ligne : https://ecotrack.lorisdev.fr** 🌍
+
+> Notes : enchaîner directement sur la démo live.
+
+---
+
+## 🖥️ Démonstration live
+
+1. Connexion (gestionnaire) → **carte temps réel** + KPIs
+2. **Générer une tournée** optimisée (TSP)
+3. Espace **citoyen** : signalement + points/badges
+4. **Swagger** : l'API documentée
+
+> Notes : garder ~5 min. Avoir un plan B (captures) si réseau capricieux.
 
 ---
 
 ## Compétences transversales
 
-- **Anglais technique** 🇬🇧
-  - Veille sur sources anglophones, doc technique en anglais, références citées
-- **Numérique responsable** 🌱
-  - Éco-conception : optimisation des requêtes, compression des données, mutualisation conteneurs Docker
-  - Réduction des tournées = **−CO₂** (cœur même du projet)
+- **Anglais technique** 🇬🇧 : veille et documentation sur sources anglophones
+- **Numérique responsable** 🌱 :
+  - Réduction des tournées (−20 %) = **moins de CO₂**
+  - Optimisation des requêtes, cache, images Docker légères, temps réel par événements (vs polling)
 
-> Notes : le jury évalue ces deux compétences dans CHAQUE bloc — les rendre visibles.
+> Notes : le jury évalue ces 2 compétences dans chaque bloc.
 
 ---
 
 ## Bilan & perspectives
 
-**Atteint**
-- Cadrage complet (Bloc 1) + solution applicative fonctionnelle (Bloc 2)
-- Architecture scalable, sécurisée, testée
+**Atteint** : les 14 cas d'utilisation du CDC, application testée, sécurisée (MFA) et **déployée en ligne**.
 
-**Perspectives**
-- IA prédictive de remplissage (maintenance préventive)
-- Application mobile chauffeur (mode offline)
-- Extension multi-villes, Open Data citoyen
+**Perspectives (M2)** : bus Kafka, orchestration Kubernetes, observabilité (Prometheus/Grafana), IA prédictive de remplissage, app mobile native.
 
 ---
 
 ## Merci — Questions
 
-**ECOTRACK** · Mastère EADL · Filière Développement
+**ECOTRACK** · https://ecotrack.lorisdev.fr · Mastère EADL — Développement
 
-> Notes : préparer les questions probables — choix de PostgreSQL vs NoSQL, pourquoi microservices, gestion de la montée en charge IoT, sécurité 2FA, éco-conception. Garder 2-3 slides d'annexe (ERD, schéma archi, capture d'écran).
+> Notes : préparer les questions probables — PostgreSQL vs NoSQL, microservices vs monolithe, montée en charge IoT, sécurité MFA, éco-conception. Garder le DCT + diagrammes en annexe sous la main.
