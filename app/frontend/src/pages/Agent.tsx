@@ -3,6 +3,7 @@ import { api } from '../api';
 import ContainerMap from '../components/ContainerMap';
 import QrScanner from '../components/QrScanner';
 import { CollectionRoute } from '../types';
+import { getPosition } from '../lib/geo';
 
 const STATUS_LABEL: Record<string, { label: string; cls: string }> = {
   PLANNED: { label: 'Planifiée', cls: 'bg-ink/5 text-ink/60' },
@@ -36,19 +37,15 @@ export default function Agent() {
   async function collectStop(containerId: string) {
     if (!selected) return;
     const volume = prompt('Volume collecté (litres) ? (optionnel)');
-    const send = (lat?: number, lng?: number) =>
-      api
-        .post(`/routes/${selected.id}/stops/${containerId}/collect`, {
-          volumeLiters: volume ? Number(volume) : undefined,
-          lat,
-          lng,
-        })
-        .then((r) => setSelected(r.data))
-        .then(() => load(selected.id));
-    navigator.geolocation.getCurrentPosition(
-      (p) => send(p.coords.latitude, p.coords.longitude),
-      () => send(),
-    );
+    const coords = await getPosition();
+    await api
+      .post(`/routes/${selected.id}/stops/${containerId}/collect`, {
+        volumeLiters: volume ? Number(volume) : undefined,
+        lat: coords?.lat,
+        lng: coords?.lng,
+      })
+      .then((r) => setSelected(r.data));
+    await load(selected.id);
   }
 
   function onScan(code: string) {
@@ -60,19 +57,17 @@ export default function Agent() {
   }
 
   // UC-A03 : anomalie terrain géolocalisée
-  function reportAnomaly() {
-    const send = (lat: number, lng: number) =>
-      api
-        .post('/signalements', { type: 'CONTENEUR_ENDOMMAGE', description: anomaly || 'Anomalie terrain', lat, lng })
-        .then(() => {
-          setAnomalyMsg('✅ Anomalie transmise au gestionnaire.');
-          setAnomaly('');
-          setTimeout(() => setAnomalyMsg(''), 3000);
-        });
-    navigator.geolocation.getCurrentPosition(
-      (p) => send(p.coords.latitude, p.coords.longitude),
-      () => send(45.764, 4.8357),
-    );
+  async function reportAnomaly() {
+    const coords = (await getPosition()) ?? { lat: 45.764, lng: 4.8357 };
+    await api.post('/signalements', {
+      type: 'CONTENEUR_ENDOMMAGE',
+      description: anomaly || 'Anomalie terrain',
+      lat: coords.lat,
+      lng: coords.lng,
+    });
+    setAnomalyMsg('✅ Anomalie transmise au gestionnaire.');
+    setAnomaly('');
+    setTimeout(() => setAnomalyMsg(''), 3000);
   }
 
   const done = selected?.stops.filter((s) => s.collected).length ?? 0;

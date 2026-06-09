@@ -1,9 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Capacitor } from '@capacitor/core';
+import { StatusBar, Style } from '@capacitor/status-bar';
 import 'leaflet/dist/leaflet.css';
 import './index.css';
 import { AuthProvider } from './auth';
+
+if (Capacitor.isNativePlatform()) {
+  StatusBar.setStyle({ style: Style.Light }).catch(() => {});
+}
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 import Login from './pages/Login';

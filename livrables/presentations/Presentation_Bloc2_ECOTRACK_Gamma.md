@@ -21,6 +21,7 @@ Filière Développement · 2025-2026 · POILLY Loris & FAUCHON Rémi (binôme pr
 - Temps réel & chaîne IoT
 - Tests & déploiement
 - **Démonstration live**
+- 📱 App iOS native (Capacitor)
 - Compétences transversales
 - Bilan du bloc
 
@@ -127,6 +128,22 @@ Capteur → MQTT → Ingestion → calcul d'état → alerte → WebSocket → D
 
 ---
 
+## 📱 App iOS native (Capacitor) — sprint additionnel
+
+Pour répondre à la **lecture littérale** du CDC (§111 « application mobile installée »), nous avons embarqué le frontend React dans une **enveloppe iOS native** via **Capacitor 8**.
+
+- **Zéro réécriture** : 100 % du code React/TS conservé
+- Stack iOS : **Swift Package Manager**, plugins Geolocation, Network, StatusBar, App, Preferences
+- **Scan QR** : double implémentation BarcodeDetector → fallback **jsQR** (compatibilité WKWebView iOS)
+- Détection runtime `Capacitor.isNativePlatform()` → API prod `ecotrack.lorisdev.fr`
+- Build & install sur **simulateur iPhone 17 Pro** (iOS 26.5) en < 4 h
+
+**Captures en annexe E du rapport** : icône home iOS · login · dashboard temps réel · scan QR actif.
+
+> Notes : en démo si projecteur OK, lancer le simulateur Xcode (~30 s boot). Sinon montrer les captures. Argument clé : l'app est **réellement installable**, l'icône apparaît, le binaire est packaged — la mention « mobile installée » du CDC est honorée sans dette technique.
+
+---
+
 ## Compétences transversales
 
 - **Anglais technique** 🇬🇧 — documentation API en anglais, RFC HTTP/MQTT, libs anglophones, choix de nommage technique en EN
@@ -138,7 +155,7 @@ Capteur → MQTT → Ingestion → calcul d'état → alerte → WebSocket → D
 
 ## Bilan du Bloc 2
 
-**Acquis** : 14 use cases livrés · 40 endpoints documentés Swagger · sécurité OWASP intégrée by design · application **déployée en ligne**.
+**Acquis** : 14 use cases livrés · 40 endpoints documentés Swagger · sécurité OWASP intégrée by design · application **déployée en ligne** + **build iOS native installable**.
 
 **Sortie du bloc** : un produit **utilisable** par 4 rôles distincts, sur lequel on peut désormais mesurer qualité, sécurité et performance — c'est le sujet du Bloc 3.
 

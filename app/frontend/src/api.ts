@@ -1,6 +1,11 @@
 import axios from 'axios';
+import { Capacitor } from '@capacitor/core';
 
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
+const NATIVE_API_URL = 'https://ecotrack.lorisdev.fr';
+
+const API_URL = Capacitor.isNativePlatform()
+  ? NATIVE_API_URL
+  : (import.meta.env.VITE_API_URL ?? 'http://localhost:3000');
 
 export const api = axios.create({ baseURL: `${API_URL}/api` });
 
